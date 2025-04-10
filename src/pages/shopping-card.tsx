@@ -3,13 +3,14 @@ import styles from './shopping-card.module.css';
 import { ProductImage } from '../components/product-image/product-image';
 import { ProductDetailes } from '../components/product-detailes/product-detailes';
 import { TInitialState } from '@utils/types';
+import { Preloader } from '../components/preloader/preloader';
 
 type TShoppingCard = {
 	product: TInitialState | null;
 };
 
 export const ShoppingCard = ({ product }: TShoppingCard): React.JSX.Element => {
-	if (!product) return <h1>Error</h1>;
+	if (!product) return <Preloader />;
 	const { colors } = product;
 	return (
 		<div className={styles.container}>
