@@ -4,7 +4,7 @@ export type TInitialState = {
 	colors: TColor[];
 };
 
-type TColor = {
+export type TColor = {
 	id: number;
 	name: string;
 	images: string[];
