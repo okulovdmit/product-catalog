@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './shopping-card.module.css';
+import { useParams } from 'react-router-dom';
 import { ProductImage } from '../components/product-image/product-image';
 import { ProductDetailes } from '../components/product-detailes/product-detailes';
 import { TInitialState } from '@utils/types';
+import { getProduct } from '../services/api';
 import { Preloader } from '../components/preloader/preloader';
 
-type TShoppingCard = {
-	product: TInitialState | null;
-};
+export const ShoppingCard = (): React.JSX.Element => {
+	const { productId: id } = useParams();
+	const [selectedProduct, setSelectedProduct] = useState<TInitialState | null>(
+		null
+	);
 
-export const ShoppingCard = ({ product }: TShoppingCard): React.JSX.Element => {
-	if (!product) return <Preloader />;
-	const { colors } = product;
+	useEffect(() => {
+		getProduct(id)
+			.then((data) => setSelectedProduct(data))
+			.catch((error) => console.error('Ошибка при загрузке продуктов:', error));
+	}, [id]);
+
+	if (!selectedProduct) return <Preloader />;
+
+	const { colors } = selectedProduct;
 	return (
 		<div className={styles.container}>
-			<ProductImage path={colors[0].images[0]} />
+			<ProductImage path={colors[0].images} />
 			<ProductDetailes />
 		</div>
 	);

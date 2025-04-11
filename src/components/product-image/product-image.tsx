@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './product-image.module.css';
 
 type TProductImage = {
-	path: string;
+	path: string[];
 };
 
 export const ProductImage = ({ path }: TProductImage): React.JSX.Element => {
+	const [mainImage, setMainImage] = useState(path[0]);
+
+	const handleMainImage = (image: string) => {
+		setMainImage(image);
+	};
+
 	return (
 		<section className={styles.container}>
-			<img className={styles.image} src={path} alt='' />
+			<img className={styles.imageMain} src={mainImage} alt='' />
 			<div className={styles.footer}>
-				<img className={styles.image} src={path} alt='' />
-				<img className={styles.image} src={path} alt='' />
+				{path.map((imagePath, index) => (
+					<button
+						key={index}
+						type='button'
+						tabIndex={0}
+						onClick={() => handleMainImage(imagePath)}
+						onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) => {
+							if ((e.key = 'enter')) handleMainImage(imagePath);
+						}}
+						className={styles.btn}>
+						<img src={imagePath} alt='' className={styles.image} />
+					</button>
+				))}
 			</div>
 		</section>
 	);

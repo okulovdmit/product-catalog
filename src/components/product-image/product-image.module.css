@@ -3,13 +3,26 @@
 	flex-flow: column;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
+	width: 50%;
 	height: 100%;
+	border-right: 2px solid rgb(81 81 81);
+}
+
+.imageMain {
+	width: auto;
+	height: 80%;
 }
 
 .image {
 	width: auto;
+	height: 100%;
+}
+
+.btn {
+	width: auto;
 	height: 80%;
+	background: transparent;
+	cursor: pointer;
 }
 
 .footer {
