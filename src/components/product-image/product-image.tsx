@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './product-image.module.css';
 
 type TProductImage = {
@@ -7,6 +7,10 @@ type TProductImage = {
 
 export const ProductImage = ({ path }: TProductImage): React.JSX.Element => {
 	const [mainImage, setMainImage] = useState(path[0]);
+
+	useEffect(() => {
+		setMainImage(path[0]);
+	}, [path]);
 
 	const handleMainImage = (image: string) => {
 		setMainImage(image);
