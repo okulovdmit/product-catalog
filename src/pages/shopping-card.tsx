@@ -3,8 +3,13 @@ import styles from './shopping-card.module.css';
 import { useParams } from 'react-router-dom';
 import { ProductImage } from '../components/product-image/product-image';
 import { ProductDetailes } from '../components/product-detailes/product-detailes';
-import { TColor, TInitialState } from '@utils/types';
-import { getProduct, getProductColor } from '../services/api';
+import { TColor, TInitialState, TSize } from '@utils/types';
+import {
+	getProduct,
+	getProductColor,
+	getSize,
+	getSizes,
+} from '../services/api';
 import { Preloader } from '../components/preloader/preloader';
 
 export const ShoppingCard = (): React.JSX.Element => {
@@ -13,6 +18,8 @@ export const ShoppingCard = (): React.JSX.Element => {
 		null
 	);
 	const [selectedColor, setSelectedColor] = useState<TColor | null>(null);
+	const [sizes, setSizes] = useState<TSize[]>([]);
+	const [selectedSize, setSelectedSize] = useState<number[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
 
@@ -28,6 +35,12 @@ export const ShoppingCard = (): React.JSX.Element => {
 			.finally(() => setIsLoading(false));
 	}, [id]);
 
+	useEffect(() => {
+		getSizes()
+			.then((data) => setSizes(data))
+			.catch((error) => setError(error.message));
+	});
+
 	if (isLoading) return <Preloader />;
 	if (error) return <h1>Error</h1>;
 	if (!selectedProduct) return <h1>Product not found</h1>;
@@ -39,6 +52,12 @@ export const ShoppingCard = (): React.JSX.Element => {
 			.catch((error) => console.error('Ошибка при загрузке продуктов:', error));
 	};
 
+	const handleChooseSize = (sizeId: number): void => {
+		getSize(sizeId)
+			.then((data) => setSelectedSize(data))
+			.catch((error) => console.error('Ошибка при загрузке продуктов:', error));
+	};
+
 	const { colors } = selectedProduct;
 	const pathImage = selectedColor.images || colors[0].images;
 	return (
@@ -46,8 +65,10 @@ export const ShoppingCard = (): React.JSX.Element => {
 			<ProductImage path={pathImage} />
 			<ProductDetailes
 				product={selectedProduct}
+				sizes={sizes}
 				color={selectedColor}
-				onClick={handleChooseColor}
+				handleChooseColor={handleChooseColor}
+				handleChooseSize={handleChooseSize}
 			/>
 		</div>
 	);

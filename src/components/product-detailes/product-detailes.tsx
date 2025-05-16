@@ -1,18 +1,22 @@
 import React from 'react';
 import styles from './product-detailes.module.css';
 import { Characteristics } from '../characteristics/characteristics';
-import { TColor, TInitialState } from '@utils/types';
+import { TColor, TInitialState, TSize } from '@utils/types';
 
 type TProductDetailes = {
 	product: TInitialState;
+	sizes: TSize[];
 	color: TColor;
-	onClick: (productId: string, colorId: number) => void;
+	handleChooseColor: (productId: string, colorId: number) => void;
+	handleChooseSize: (sizeId: number) => void;
 };
 
 export const ProductDetailes = ({
 	product,
+	sizes,
 	color,
-	onClick,
+	handleChooseColor,
+	handleChooseSize,
 }: TProductDetailes): React.JSX.Element => {
 	const { colors } = product;
 	const { price, description } = color;
@@ -35,9 +39,14 @@ export const ProductDetailes = ({
 					</p>
 					<p>{description}</p>
 				</div>
-				<div className={styles.feutures}>
-					<Characteristics colors={colors} onClick={onClick} />
-					{/* <Cart /> */}
+				<div className={styles.features}>
+					<Characteristics
+						sizes={sizes}
+						colors={colors}
+						handleChooseSize={handleChooseSize}
+						handleChooseColor={handleChooseColor}
+					/>
+					{/* <CartButton /> */}
 				</div>
 			</div>
 			<div className={styles.footer}></div>

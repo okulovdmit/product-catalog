@@ -12,3 +12,16 @@ export type TColor = {
 	description: string;
 	sizes: number[];
 };
+
+export type TSize = {
+	id: number;
+	label: string;
+	number: number;
+};
+
+export type TCartItem = {
+	name: string;
+	color: string;
+	size: string;
+	price: string;
+};

@@ -1,21 +1,26 @@
 import React from 'react';
 // import styles from '';
-import { Buttons } from '../buttons/buttons';
-import { TColor } from '@utils/types';
+import { ButtonsColor } from '../buttons/buttons-color';
+import { ButtonsSizes } from '../buttons/buttons-sizes';
+import { TColor, TSize } from '@utils/types';
 
 type TCharacteristicsProps = {
+	sizes: TSize[];
 	colors: TColor[];
-	onClick: (productId: string, colorId: number) => void;
+	handleChooseColor: (productId: string, colorId: number) => void;
+	handleChooseSize: (sizeId: number) => void;
 };
 
 export const Characteristics = ({
+	sizes,
 	colors,
-	onClick,
+	handleChooseColor,
+	handleChooseSize,
 }: TCharacteristicsProps): React.JSX.Element => {
 	return (
 		<>
-			{/* <Buttons type='size' colors={colors} /> */}
-			<Buttons type='color' colors={colors} onClick={onClick} />
+			<ButtonsSizes sizes={sizes} handleChooseSize={handleChooseSize} />
+			<ButtonsColor colors={colors} handleChooseColor={handleChooseColor} />
 		</>
 	);
 };
