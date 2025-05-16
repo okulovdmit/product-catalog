@@ -42,7 +42,7 @@ export const ShoppingCard = (): React.JSX.Element => {
 	});
 
 	if (isLoading) return <Preloader />;
-	if (error) return <h1>Error</h1>;
+	if (error) return <h1>{selectedSize}</h1>; // return later
 	if (!selectedProduct) return <h1>Product not found</h1>;
 	if (!selectedColor) return <h1>Color not found</h1>;
 

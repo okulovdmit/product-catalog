@@ -4,7 +4,7 @@
 	align-items: center;
 	width: 50%;
 	height: 100%;
-  min-height: 200px;
+	min-height: 200px;
 }
 
 .header {
@@ -34,7 +34,7 @@
 	align-items: flex-start;
 	width: auto;
 	height: 100%;
- padding: 0 10px;
+	padding: 0 10px;
 	color: black;
 	border-right: 2px solid black;
 }
@@ -53,7 +53,7 @@
 	flex-flow: column;
 	width: 50%;
 	height: 100%;
-  margin: 10px;
+	margin: 10px;
 }
 
 .footer {
