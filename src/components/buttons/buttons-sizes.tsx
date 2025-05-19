@@ -4,11 +4,13 @@ import styles from './buttons-sizes.module.css';
 
 type TButtonsSizeProps = {
 	sizes: TSize[];
+	enableSizes: number[];
 	handleChooseSize: (sizeId: number) => void;
 };
 
 export const ButtonsSizes = ({
 	sizes,
+	enableSizes,
 	handleChooseSize,
 }: TButtonsSizeProps): React.JSX.Element => {
 	return (
@@ -22,7 +24,8 @@ export const ButtonsSizes = ({
 						key={index}
 						onClick={() => {
 							handleChooseSize(size.id);
-						}}>
+						}}
+						disabled={!enableSizes.includes(size.id)}>
 						{size.label}/{size.number}
 					</button>
 				))}

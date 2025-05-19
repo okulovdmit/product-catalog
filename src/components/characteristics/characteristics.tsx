@@ -7,6 +7,7 @@ import { TColor, TSize } from '@utils/types';
 type TCharacteristicsProps = {
 	sizes: TSize[];
 	colors: TColor[];
+	enableSizes: number[];
 	handleChooseColor: (productId: string, colorId: number) => void;
 	handleChooseSize: (sizeId: number) => void;
 };
@@ -14,12 +15,17 @@ type TCharacteristicsProps = {
 export const Characteristics = ({
 	sizes,
 	colors,
+	enableSizes,
 	handleChooseColor,
 	handleChooseSize,
 }: TCharacteristicsProps): React.JSX.Element => {
 	return (
 		<>
-			<ButtonsSizes sizes={sizes} handleChooseSize={handleChooseSize} />
+			<ButtonsSizes
+				sizes={sizes}
+				enableSizes={enableSizes}
+				handleChooseSize={handleChooseSize}
+			/>
 			<ButtonsColor colors={colors} handleChooseColor={handleChooseColor} />
 		</>
 	);

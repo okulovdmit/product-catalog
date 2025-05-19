@@ -19,7 +19,7 @@ export const ProductDetailes = ({
 	handleChooseSize,
 }: TProductDetailes): React.JSX.Element => {
 	const { colors } = product;
-	const { price, description } = color;
+	const { price, description, sizes: enableSizes } = color;
 	return (
 		<section className={styles.container}>
 			<div className={styles.header}>
@@ -42,6 +42,7 @@ export const ProductDetailes = ({
 				<div className={styles.features}>
 					<Characteristics
 						sizes={sizes}
+						enableSizes={enableSizes}
 						colors={colors}
 						handleChooseSize={handleChooseSize}
 						handleChooseColor={handleChooseColor}
