@@ -9,6 +9,7 @@ type TProductDetailes = {
 	color: TColor;
 	handleChooseColor: (productId: string, colorId: number) => void;
 	handleChooseSize: (sizeId: number) => void;
+	handleChooseTShirt: () => void;
 };
 
 export const ProductDetailes = ({
@@ -17,6 +18,7 @@ export const ProductDetailes = ({
 	color,
 	handleChooseColor,
 	handleChooseSize,
+	handleChooseTShirt,
 }: TProductDetailes): React.JSX.Element => {
 	const { colors } = product;
 	const { price, description, sizes: enableSizes } = color;
@@ -47,7 +49,7 @@ export const ProductDetailes = ({
 						handleChooseSize={handleChooseSize}
 						handleChooseColor={handleChooseColor}
 					/>
-					{/* <CartButton /> */}
+					<button onClick={handleChooseTShirt}>Добавить</button>
 				</div>
 			</div>
 			<div className={styles.footer}></div>

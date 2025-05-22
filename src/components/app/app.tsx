@@ -4,6 +4,7 @@ import { TInitialState } from '@utils/types';
 import { getProducts } from '../../services/api';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Home, ShoppingCard } from '../../pages/index';
+import { Cart } from '../cart/cart';
 
 export const App = (): React.JSX.Element => {
 	const location = useLocation();
@@ -21,6 +22,7 @@ export const App = (): React.JSX.Element => {
 			<Routes location={background || location}>
 				<Route path='/' element={<Home products={products} />} />
 				<Route path='/products/:productId' element={<ShoppingCard />} />
+				<Route path='/cart' element={<Cart />} />
 			</Routes>
 		</div>
 	);

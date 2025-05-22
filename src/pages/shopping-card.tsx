@@ -3,7 +3,7 @@ import styles from './shopping-card.module.css';
 import { useParams } from 'react-router-dom';
 import { ProductImage } from '../components/product-image/product-image';
 import { ProductDetailes } from '../components/product-detailes/product-detailes';
-import { TColor, TInitialState, TSize } from '@utils/types';
+import { TCartItem, TColor, TInitialState, TSize } from '@utils/types';
 import {
 	getProduct,
 	getProductColor,
@@ -19,7 +19,7 @@ export const ShoppingCard = (): React.JSX.Element => {
 	);
 	const [selectedColor, setSelectedColor] = useState<TColor | null>(null);
 	const [sizes, setSizes] = useState<TSize[]>([]);
-	const [selectedSize, setSelectedSize] = useState<number[]>([]);
+	const [selectedSize, setSelectedSize] = useState<TSize>(sizes[0]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
 
@@ -42,7 +42,7 @@ export const ShoppingCard = (): React.JSX.Element => {
 	});
 
 	if (isLoading) return <Preloader />;
-	if (error) return <h1>{selectedSize}</h1>; // return later
+	if (error) return <h1>error</h1>;
 	if (!selectedProduct) return <h1>Product not found</h1>;
 	if (!selectedColor) return <h1>Color not found</h1>;
 
@@ -60,6 +60,25 @@ export const ShoppingCard = (): React.JSX.Element => {
 
 	const { colors } = selectedProduct;
 	const pathImage = selectedColor.images || colors[0].images;
+	const handleChooseTShirt = () => {
+		const cart: TCartItem[] = [];
+		const cartLocal = localStorage.getItem('cart');
+		const product: TCartItem = {
+			image: pathImage[0],
+			name: selectedProduct.name,
+			color: selectedColor.name,
+			size: selectedSize.label,
+			price: selectedColor.price,
+		};
+		if (!cartLocal) {
+			cart.push(product);
+			localStorage.setItem('cart', JSON.stringify(cart));
+		} else {
+			const parsedCart = JSON.parse(cartLocal);
+			parsedCart.push(product);
+			localStorage.setItem('cart', parsedCart);
+		}
+	};
 	return (
 		<div className={styles.container}>
 			<ProductImage path={pathImage} />
@@ -69,6 +88,7 @@ export const ShoppingCard = (): React.JSX.Element => {
 				color={selectedColor}
 				handleChooseColor={handleChooseColor}
 				handleChooseSize={handleChooseSize}
+				handleChooseTShirt={handleChooseTShirt}
 			/>
 		</div>
 	);
