@@ -9,9 +9,10 @@ export const CartItem = ({
 	size,
 	price,
 }: TCartItem): React.JSX.Element => {
+	console.log(name);
 	return (
 		<div className={styles.container}>
-			<img src={image} alt='' />
+			<img src={image} alt='' className={styles.img} />
 			<p>{name}</p>
 			<p>{color}</p>
 			<p>{size}</p>

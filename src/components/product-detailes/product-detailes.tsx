@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './product-detailes.module.css';
+import { Link } from 'react-router-dom';
 import { Characteristics } from '../characteristics/characteristics';
 import { TColor, TInitialState, TSize } from '@utils/types';
 
@@ -20,6 +21,7 @@ export const ProductDetailes = ({
 	handleChooseSize,
 	handleChooseTShirt,
 }: TProductDetailes): React.JSX.Element => {
+	const cart = localStorage.getItem('cart');
 	const { colors } = product;
 	const { price, description, sizes: enableSizes } = color;
 	return (
@@ -49,7 +51,16 @@ export const ProductDetailes = ({
 						handleChooseSize={handleChooseSize}
 						handleChooseColor={handleChooseColor}
 					/>
-					<button onClick={handleChooseTShirt}>Добавить</button>
+					<div className={styles.cart}>
+						{cart && (
+							<Link to='/cart' className={styles.link}>
+								<button>В корзину</button>
+							</Link>
+						)}
+						<button className={styles.button} onClick={handleChooseTShirt}>
+							Добавить в корзину
+						</button>
+					</div>
 				</div>
 			</div>
 			<div className={styles.footer}></div>

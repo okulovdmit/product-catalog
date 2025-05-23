@@ -23,6 +23,6 @@ export type TCartItem = {
 	image: string;
 	name: string;
 	color: string;
-	size: string;
+	size?: string;
 	price: string;
 };

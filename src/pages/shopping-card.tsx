@@ -14,15 +14,19 @@ import { Preloader } from '../components/preloader/preloader';
 
 export const ShoppingCard = (): React.JSX.Element => {
 	const { productId: id } = useParams();
+	const cartLocal = localStorage.getItem('cart');
 	const [selectedProduct, setSelectedProduct] = useState<TInitialState | null>(
 		null
 	);
 	const [selectedColor, setSelectedColor] = useState<TColor | null>(null);
 	const [sizes, setSizes] = useState<TSize[]>([]);
-	const [selectedSize, setSelectedSize] = useState<TSize>(sizes[0]);
+	const [selectedSize, setSelectedSize] = useState<TSize | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
-
+	const [cart, setCart] = useState<TCartItem[]>(
+		cartLocal ? JSON.parse(cartLocal) : []
+	);
+	console.log(selectedSize);
 	useEffect(() => {
 		getProduct(id)
 			.then((data) => {
@@ -31,7 +35,7 @@ export const ShoppingCard = (): React.JSX.Element => {
 					setSelectedColor(data.colors[0]);
 				}
 			})
-			.catch((error) => setError(error.mesage))
+			.catch((error) => setError(error.message))
 			.finally(() => setIsLoading(false));
 	}, [id]);
 
@@ -61,23 +65,21 @@ export const ShoppingCard = (): React.JSX.Element => {
 	const { colors } = selectedProduct;
 	const pathImage = selectedColor.images || colors[0].images;
 	const handleChooseTShirt = () => {
-		const cart: TCartItem[] = [];
-		const cartLocal = localStorage.getItem('cart');
+		if (!selectedSize) {
+			console.error('выберите размер');
+			return;
+		}
 		const product: TCartItem = {
 			image: pathImage[0],
 			name: selectedProduct.name,
 			color: selectedColor.name,
-			size: selectedSize.label,
+			size: selectedSize?.label,
 			price: selectedColor.price,
 		};
-		if (!cartLocal) {
-			cart.push(product);
-			localStorage.setItem('cart', JSON.stringify(cart));
-		} else {
-			const parsedCart = JSON.parse(cartLocal);
-			parsedCart.push(product);
-			localStorage.setItem('cart', parsedCart);
-		}
+		console.log('add product', product);
+		const updateCart = [...cart, product];
+		setCart(updateCart);
+		localStorage.setItem('cart', JSON.stringify(cart));
 	};
 	return (
 		<div className={styles.container}>
