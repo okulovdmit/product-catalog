@@ -11,22 +11,19 @@ import {
 	getSizes,
 } from '../services/api';
 import { Preloader } from '../components/preloader/preloader';
+import { v4 as uuid } from 'uuid';
 
 export const ShoppingCard = (): React.JSX.Element => {
 	const { productId: id } = useParams();
-	const cartLocal = localStorage.getItem('cart');
 	const [selectedProduct, setSelectedProduct] = useState<TInitialState | null>(
 		null
 	);
 	const [selectedColor, setSelectedColor] = useState<TColor | null>(null);
 	const [sizes, setSizes] = useState<TSize[]>([]);
 	const [selectedSize, setSelectedSize] = useState<TSize | null>(null);
+	const [cart, setCart] = useState<TCartItem[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
-	const [cart, setCart] = useState<TCartItem[]>(
-		cartLocal ? JSON.parse(cartLocal) : []
-	);
-	console.log(selectedSize);
 	useEffect(() => {
 		getProduct(id)
 			.then((data) => {
@@ -54,6 +51,7 @@ export const ShoppingCard = (): React.JSX.Element => {
 		getProductColor(productID, colorID)
 			.then((data) => setSelectedColor(data))
 			.catch((error) => console.error('Ошибка при загрузке продуктов:', error));
+		setSelectedSize(null);
 	};
 
 	const handleChooseSize = (sizeId: number): void => {
@@ -75,12 +73,14 @@ export const ShoppingCard = (): React.JSX.Element => {
 			color: selectedColor.name,
 			size: selectedSize?.label,
 			price: selectedColor.price,
+			id: uuid(),
 		};
-		console.log('add product', product);
-		const updateCart = [...cart, product];
+		const updateCart: TCartItem[] = [...cart, product];
 		setCart(updateCart);
-		localStorage.setItem('cart', JSON.stringify(cart));
+		localStorage.setItem('cart', JSON.stringify(updateCart));
+		setSelectedSize(null);
 	};
+	const allowAddToCart = !selectedSize;
 	return (
 		<div className={styles.container}>
 			<ProductImage path={pathImage} />
@@ -91,6 +91,8 @@ export const ShoppingCard = (): React.JSX.Element => {
 				handleChooseColor={handleChooseColor}
 				handleChooseSize={handleChooseSize}
 				handleChooseTShirt={handleChooseTShirt}
+				cart={cart}
+				allowAddToCart={allowAddToCart}
 			/>
 		</div>
 	);

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './product-detailes.module.css';
 import { Link } from 'react-router-dom';
 import { Characteristics } from '../characteristics/characteristics';
-import { TColor, TInitialState, TSize } from '@utils/types';
+import { TCartItem, TColor, TInitialState, TSize } from '@utils/types';
 
 type TProductDetailes = {
 	product: TInitialState;
@@ -11,6 +11,8 @@ type TProductDetailes = {
 	handleChooseColor: (productId: string, colorId: number) => void;
 	handleChooseSize: (sizeId: number) => void;
 	handleChooseTShirt: () => void;
+	allowAddToCart: boolean;
+	cart: TCartItem[];
 };
 
 export const ProductDetailes = ({
@@ -20,10 +22,13 @@ export const ProductDetailes = ({
 	handleChooseColor,
 	handleChooseSize,
 	handleChooseTShirt,
+	allowAddToCart,
+	cart,
 }: TProductDetailes): React.JSX.Element => {
-	const cart = localStorage.getItem('cart');
 	const { colors } = product;
 	const { price, description, sizes: enableSizes } = color;
+	const localCart = localStorage.getItem('cart') ?? '[]';
+	const parsedLocalCart = JSON.parse(localCart);
 	return (
 		<section className={styles.container}>
 			<div className={styles.header}>
@@ -52,12 +57,15 @@ export const ProductDetailes = ({
 						handleChooseColor={handleChooseColor}
 					/>
 					<div className={styles.cart}>
-						{cart && (
+						{(cart.length > 0 || parsedLocalCart.length > 0) && (
 							<Link to='/cart' className={styles.link}>
 								<button>В корзину</button>
 							</Link>
 						)}
-						<button className={styles.button} onClick={handleChooseTShirt}>
+						<button
+							className={styles.button}
+							onClick={handleChooseTShirt}
+							disabled={allowAddToCart}>
 							Добавить в корзину
 						</button>
 					</div>
