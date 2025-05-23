@@ -1,7 +1,9 @@
 .container {
 	display: flex;
 	width: 80vw;
+	min-width: 1300px;
 	height: 80vh;
+	min-height: 500px;
 	background: white;
 	border-radius: 30px;
 }

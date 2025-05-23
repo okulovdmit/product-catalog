@@ -13,7 +13,7 @@ export const Card = ({ path, name, id }: TCardProps): React.JSX.Element => {
 		<Link key={id} to={`/products/${id}`} discover='none'>
 			<div aria-hidden='true' className={styles.container}>
 				<img className={styles.img} src={path} alt={name} />
-				<h1>{name}</h1>
+				<h1 className={styles.title}>{name}</h1>
 			</div>
 		</Link>
 	);

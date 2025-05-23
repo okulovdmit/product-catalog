@@ -7,7 +7,7 @@
 	align-items: center;
 	gap: 10px;
 	width: 300px;
-	height: 550px;
+	height: auto;
 	padding: var(--container-padding);
 	background: rgb(255 255 255 / 43.8%);
 	border-radius: var(--container-radius);
@@ -17,4 +17,8 @@
 	width: 100%;
 	height: auto;
 	border-radius: calc(var(--container-radius) - var(--container-padding));
+}
+
+.title {
+	margin: 0;
 }
