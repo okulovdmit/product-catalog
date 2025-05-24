@@ -29,6 +29,7 @@ export const ProductDetailes = ({
 	const { price, description, sizes: enableSizes } = color;
 	const localCart = localStorage.getItem('cart') ?? '[]';
 	const parsedLocalCart = JSON.parse(localCart);
+	const usedCart = cart && cart.length > 0 ? cart : parsedLocalCart;
 	return (
 		<section className={styles.container}>
 			<div className={styles.header}>
@@ -39,6 +40,7 @@ export const ProductDetailes = ({
 					Сравнить
 				</button>
 				<img className={styles.item} src='' alt='logo' />
+				<Link to={'/'}>На главную</Link>
 			</div>
 
 			<div className={styles.content}>
@@ -57,12 +59,13 @@ export const ProductDetailes = ({
 						handleChooseColor={handleChooseColor}
 					/>
 					<div className={styles.cart}>
-						{(cart.length > 0 || parsedLocalCart.length > 0) && (
+						{usedCart.length > 0 && (
 							<Link to='/cart' className={styles.link}>
-								<button>В корзину</button>
+								<button type='button'>В корзину ({usedCart.length})</button>
 							</Link>
 						)}
 						<button
+							type='button'
 							className={styles.button}
 							onClick={handleChooseTShirt}
 							disabled={allowAddToCart}>
