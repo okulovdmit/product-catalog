@@ -1,0 +1,24 @@
+.container {
+	--container-padding: 10px;
+	--container-radius: 15px;
+	display: flex;
+	flex-flow: column;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+	width: 300px;
+	height: auto;
+	padding: var(--container-padding);
+	background: rgb(255 255 255 / 43.8%);
+	border-radius: var(--container-radius);
+}
+
+.img {
+	width: 100%;
+	height: auto;
+	border-radius: calc(var(--container-radius) - var(--container-padding));
+}
+
+.title {
+	margin: 0;
+}

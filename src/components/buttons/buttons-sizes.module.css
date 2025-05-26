@@ -1,0 +1,27 @@
+.container {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+.title {
+	margin-left: 6px;
+}
+
+.btns {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.btn {
+	width: auto;
+	height: 30px;
+	margin: 6px;
+	padding: 0 5px;
+	color: black;
+	background: transparent;
+	border: 2px solid black;
+	border-radius: 5px;
+}

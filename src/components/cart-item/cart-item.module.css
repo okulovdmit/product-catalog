@@ -1,0 +1,24 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: black;
+	border: 2px solid white;
+}
+
+.img {
+	height: 200px;
+}
+
+.name,
+.price {
+	margin: 0;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.color,
+.size {
+	margin: 0;
+	font-size: 20px;
+}
