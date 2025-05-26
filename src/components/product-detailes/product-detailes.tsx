@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './product-detailes.module.css';
 import { Link } from 'react-router-dom';
 import { Characteristics } from '../characteristics/characteristics';
-import { TCartItem, TColor, TInitialState, TSize } from '@utils/types';
+import { TColor, TInitialState, TSize } from '@utils/types';
 
 type TProductDetailes = {
 	product: TInitialState;
@@ -12,7 +12,6 @@ type TProductDetailes = {
 	handleChooseSize: (sizeId: number) => void;
 	handleChooseTShirt: () => void;
 	allowAddToCart: boolean;
-	cart: TCartItem[];
 };
 
 export const ProductDetailes = ({
@@ -23,13 +22,11 @@ export const ProductDetailes = ({
 	handleChooseSize,
 	handleChooseTShirt,
 	allowAddToCart,
-	cart,
 }: TProductDetailes): React.JSX.Element => {
 	const { colors } = product;
 	const { price, description, sizes: enableSizes } = color;
 	const localCart = localStorage.getItem('cart') ?? '[]';
 	const parsedLocalCart = JSON.parse(localCart);
-	const usedCart = cart && cart.length > 0 ? cart : parsedLocalCart;
 	return (
 		<section className={styles.container}>
 			<div className={styles.header}>
@@ -59,9 +56,11 @@ export const ProductDetailes = ({
 						handleChooseColor={handleChooseColor}
 					/>
 					<div className={styles.cart}>
-						{usedCart.length > 0 && (
+						{parsedLocalCart.length > 0 && (
 							<Link to='/cart' className={styles.link}>
-								<button type='button'>В корзину ({usedCart.length})</button>
+								<button type='button'>
+									В корзину ({parsedLocalCart.length})
+								</button>
 							</Link>
 						)}
 						<button

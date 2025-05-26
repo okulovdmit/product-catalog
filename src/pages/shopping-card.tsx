@@ -13,7 +13,13 @@ import {
 import { Preloader } from '../components/preloader/preloader';
 import { v4 as uuid } from 'uuid';
 
-export const ShoppingCard = (): React.JSX.Element => {
+type TShoppingCardProps = {
+	addToCart: (product: TCartItem) => void;
+};
+
+export const ShoppingCard = ({
+	addToCart,
+}: TShoppingCardProps): React.JSX.Element => {
 	const { productId: id } = useParams();
 	const [selectedProduct, setSelectedProduct] = useState<TInitialState | null>(
 		null
@@ -21,7 +27,6 @@ export const ShoppingCard = (): React.JSX.Element => {
 	const [selectedColor, setSelectedColor] = useState<TColor | null>(null);
 	const [sizes, setSizes] = useState<TSize[]>([]);
 	const [selectedSize, setSelectedSize] = useState<TSize | null>(null);
-	const [cart, setCart] = useState<TCartItem[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
 	useEffect(() => {
@@ -75,9 +80,7 @@ export const ShoppingCard = (): React.JSX.Element => {
 			price: selectedColor.price,
 			id: uuid(),
 		};
-		const updateCart: TCartItem[] = [...cart, product];
-		setCart(updateCart);
-		localStorage.setItem('cart', JSON.stringify(updateCart));
+		addToCart(product);
 		setSelectedSize(null);
 	};
 	const allowAddToCart = !selectedSize;
@@ -91,7 +94,6 @@ export const ShoppingCard = (): React.JSX.Element => {
 				handleChooseColor={handleChooseColor}
 				handleChooseSize={handleChooseSize}
 				handleChooseTShirt={handleChooseTShirt}
-				cart={cart}
 				allowAddToCart={allowAddToCart}
 			/>
 		</div>
