@@ -37,7 +37,9 @@ export const ProductDetailes = ({
 					Сравнить
 				</button>
 				<img className={styles.item} src='' alt='logo' />
-				<Link to={'/'}>На главную</Link>
+				<Link to={'/'} className={styles.link__main}>
+					На главную
+				</Link>
 			</div>
 
 			<div className={styles.content}>
