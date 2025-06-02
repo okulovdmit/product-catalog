@@ -45,7 +45,10 @@ export const App = (): React.JSX.Element => {
 					path='/products/:productId'
 					element={<ShoppingCard addToCart={addToCart} />}
 				/>
-				<Route path='/cart' element={<Cart deleteItem={deleteItem} />} />
+				<Route
+					path='/cart'
+					element={<Cart deleteItem={deleteItem} cart={cart} />}
+				/>
 			</Routes>
 		</div>
 	);

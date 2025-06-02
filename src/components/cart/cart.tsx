@@ -6,16 +6,14 @@ import { CartItem } from '../cart-item/cart-item';
 
 type TCartProps = {
 	deleteItem: (id: string) => void;
+	cart: TCartItem[];
 };
-export const Cart = ({ deleteItem }: TCartProps): React.JSX.Element => {
-	const lsItems = localStorage.getItem('cart');
+export const Cart = ({ deleteItem, cart }: TCartProps): React.JSX.Element => {
 	const navigate = useNavigate();
-	const [items, setItems] = useState<TCartItem[]>([]);
+	const [items, setItems] = useState<TCartItem[]>(cart);
 	useEffect(() => {
-		if (lsItems) {
-			setItems(JSON.parse(lsItems));
-		}
-	}, [lsItems]);
+		setItems(cart);
+	}, [cart]);
 	const backward = () => {
 		navigate(-1);
 	};
