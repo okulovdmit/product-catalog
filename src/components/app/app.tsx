@@ -26,6 +26,17 @@ export const App = (): React.JSX.Element => {
 		localStorage.setItem('cart', JSON.stringify(updateCart));
 	};
 
+	const deleteItem = (id: string) => {
+		if (cart.length === 1) {
+			localStorage.removeItem('cart');
+			setCart([]);
+		} else {
+			const newCart = cart.filter((item) => item.id !== id);
+			setCart(newCart);
+			localStorage.setItem('cart', JSON.stringify(newCart));
+		}
+	};
+
 	return (
 		<div className={s.container}>
 			<Routes location={background || location}>
@@ -34,7 +45,10 @@ export const App = (): React.JSX.Element => {
 					path='/products/:productId'
 					element={<ShoppingCard addToCart={addToCart} />}
 				/>
-				<Route path='/cart' element={<Cart />} />
+				<Route
+					path='/cart'
+					element={<Cart deleteItem={deleteItem} cart={cart} />}
+				/>
 			</Routes>
 		</div>
 	);

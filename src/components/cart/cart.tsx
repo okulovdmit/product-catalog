@@ -4,28 +4,20 @@ import styles from './cart.module.css';
 import { TCartItem } from '@utils/types';
 import { CartItem } from '../cart-item/cart-item';
 
-export const Cart = (): React.JSX.Element => {
+type TCartProps = {
+	deleteItem: (id: string) => void;
+	cart: TCartItem[];
+};
+export const Cart = ({ deleteItem, cart }: TCartProps): React.JSX.Element => {
 	const navigate = useNavigate();
-	const [items, setItems] = useState<TCartItem[]>([]);
+	const [items, setItems] = useState<TCartItem[]>(cart);
 	useEffect(() => {
-		const lsItems = localStorage.getItem('cart');
-		if (lsItems) {
-			setItems(JSON.parse(lsItems));
-		}
-	}, []);
+		setItems(cart);
+	}, [cart]);
 	const backward = () => {
 		navigate(-1);
 	};
-	const deleteItem = (id: string) => {
-		if (items.length === 1) {
-			localStorage.removeItem('cart');
-			setItems([]);
-		} else {
-			const newItems = items.filter((item) => item.id !== id);
-			setItems(newItems);
-			localStorage.setItem('cart', JSON.stringify(newItems));
-		}
-	};
+
 	return (
 		<div className={styles.container}>
 			<button className={styles.back} onClick={backward}>
@@ -34,7 +26,11 @@ export const Cart = (): React.JSX.Element => {
 			<div className={styles.items}>
 				{items && items.length > 0 ? (
 					items.map((item) => (
-						<CartItem key={item.id} {...item} deleteItem={deleteItem} />
+						<CartItem
+							key={item.id}
+							{...item}
+							deleteItem={() => deleteItem(item.id)}
+						/>
 					))
 				) : (
 					<div className={styles.emptyContainer}>

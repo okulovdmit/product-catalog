@@ -58,13 +58,12 @@ export const ProductDetailes = ({
 						handleChooseColor={handleChooseColor}
 					/>
 					<div className={styles.cart}>
-						{parsedLocalCart.length > 0 && (
-							<Link to='/cart' className={styles.link}>
-								<button type='button'>
-									В корзину ({parsedLocalCart.length})
-								</button>
-							</Link>
-						)}
+						<Link to='/cart' className={styles.link}>
+							<button type='button'>
+								В корзину ({parsedLocalCart.length})
+							</button>
+						</Link>
+
 						<button
 							type='button'
 							className={styles.button}
